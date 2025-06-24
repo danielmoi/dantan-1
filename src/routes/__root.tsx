@@ -8,6 +8,7 @@ import {
 } from '@tanstack/react-router';
 import { NotFound } from 'src/components/NotFound';
 import type { ReactNode } from 'react';
+import appCss from '@/styles/app.css?url';
 
 export const Route = createRootRoute({
   head: () => ({
@@ -24,6 +25,10 @@ export const Route = createRootRoute({
       },
     ],
     links: [
+      {
+        rel: 'stylesheet',
+        href: appCss,
+      },
       {
         rel: 'apple-touch-icon',
         sizes: '180x180',
