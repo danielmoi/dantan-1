@@ -19,7 +19,7 @@ export const data = {
   },
   teams: [
     {
-      name: 'Acme Inc',
+      name: 'Danstack',
       logo: GalleryVerticalEnd,
       plan: 'Enterprise',
     },
