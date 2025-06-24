@@ -1,11 +1,17 @@
-Started 250624
+# Danstack
 
-Need to commit package-lock.json
-And also get template with dark mode working
+## Background
 
-https://tanstack.com/start/latest/docs/framework/react/build-from-scratch
+- Started 250624
+- Use this as the template
 
-https://ui.shadcn.com/docs/installation/tanstack
+## To Do
 
-Copy from library-demo-2 (dark mode toggle)
-Although that repo is broken
+- [x] Need to commit package-lock.json
+- [x] And also get template with dark mode working
+- [ ] Get hosting working
+
+## Resources
+
+- https://tanstack.com/start/latest/docs/framework/react/build-from-scratch
+- https://ui.shadcn.com/docs/installation/tanstack
