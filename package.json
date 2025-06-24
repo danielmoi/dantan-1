@@ -1,0 +1,28 @@
+{
+  "name": "danstack-3",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "vite dev",
+    "build": "vite build"
+  },
+  "author": "Daniel Moi",
+  "license": "UNLICENCED",
+  "description": "",
+  "dependencies": {
+    "@tanstack/eslint-config": "^0.2.0",
+    "@tanstack/react-router": "^1.121.34",
+    "@tanstack/react-start": "^1.121.35",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "vite": "^6.3.5"
+  },
+  "devDependencies": {
+    "@types/react": "^19.1.8",
+    "@types/react-dom": "^19.1.6",
+    "prettier": "^3.6.0",
+    "typescript": "^5.8.3",
+    "vite-tsconfig-paths": "^5.1.4"
+  }
+}
