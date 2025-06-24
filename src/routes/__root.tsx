@@ -10,6 +10,12 @@ import { NotFound } from 'src/components/NotFound';
 import type { ReactNode } from 'react';
 import appCss from '@/styles/app.css?url';
 
+import { ThemeProvider } from '@/components/theme-provider';
+import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
+import { AppSidebar } from '@/components/app-sidebar';
+import { Header } from '@/components/Header';
+import { Body } from '@/components/Body';
+
 export const Route = createRootRoute({
   head: () => ({
     meta: [
@@ -69,7 +75,16 @@ function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
         <HeadContent />
       </head>
       <body>
-        {children}
+        {/* can use suppressHydrationWarning attribute on body tag, but prefer detecting the cause; the error in this initial case was from a browser downloader extension */}
+        <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+          <SidebarProvider>
+            <AppSidebar />
+            <SidebarInset>
+              <Header />
+              <Body>{children}</Body>
+            </SidebarInset>
+          </SidebarProvider>
+        </ThemeProvider>
         <Scripts />
       </body>
     </html>
