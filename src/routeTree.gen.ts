@@ -9,12 +9,18 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as DocumentsRouteImport } from './routes/documents'
+import { Route as TwoRouteImport } from './routes/two'
+import { Route as OneRouteImport } from './routes/one'
 import { Route as IndexRouteImport } from './routes/index'
 
-const DocumentsRoute = DocumentsRouteImport.update({
-  id: '/documents',
-  path: '/documents',
+const TwoRoute = TwoRouteImport.update({
+  id: '/two',
+  path: '/two',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OneRoute = OneRouteImport.update({
+  id: '/one',
+  path: '/one',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -25,37 +31,48 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/documents': typeof DocumentsRoute
+  '/one': typeof OneRoute
+  '/two': typeof TwoRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/documents': typeof DocumentsRoute
+  '/one': typeof OneRoute
+  '/two': typeof TwoRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/documents': typeof DocumentsRoute
+  '/one': typeof OneRoute
+  '/two': typeof TwoRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/documents'
+  fullPaths: '/' | '/one' | '/two'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/documents'
-  id: '__root__' | '/' | '/documents'
+  to: '/' | '/one' | '/two'
+  id: '__root__' | '/' | '/one' | '/two'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  DocumentsRoute: typeof DocumentsRoute
+  OneRoute: typeof OneRoute
+  TwoRoute: typeof TwoRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/documents': {
-      id: '/documents'
-      path: '/documents'
-      fullPath: '/documents'
-      preLoaderRoute: typeof DocumentsRouteImport
+    '/two': {
+      id: '/two'
+      path: '/two'
+      fullPath: '/two'
+      preLoaderRoute: typeof TwoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/one': {
+      id: '/one'
+      path: '/one'
+      fullPath: '/one'
+      preLoaderRoute: typeof OneRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -70,7 +87,8 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  DocumentsRoute: DocumentsRoute,
+  OneRoute: OneRoute,
+  TwoRoute: TwoRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

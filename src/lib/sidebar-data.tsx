@@ -46,12 +46,12 @@ export const data = {
           url: '/',
         },
         {
-          title: 'Documents',
-          url: '/documents',
+          title: 'One',
+          url: '/one',
         },
         {
-          title: 'Categories',
-          url: '/categories',
+          title: 'Two',
+          url: '/two',
         },
       ],
     },
