@@ -9,18 +9,19 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as TwoRouteImport } from './routes/two'
-import { Route as OneRouteImport } from './routes/one'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as AuthedRouteImport } from './routes/_authed'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthedTwoRouteImport } from './routes/_authed/two'
+import { Route as AuthedDashboardRouteImport } from './routes/_authed/dashboard'
 
-const TwoRoute = TwoRouteImport.update({
-  id: '/two',
-  path: '/two',
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
-const OneRoute = OneRouteImport.update({
-  id: '/one',
-  path: '/one',
+const AuthedRoute = AuthedRouteImport.update({
+  id: '/_authed',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -28,51 +29,71 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthedTwoRoute = AuthedTwoRouteImport.update({
+  id: '/two',
+  path: '/two',
+  getParentRoute: () => AuthedRoute,
+} as any)
+const AuthedDashboardRoute = AuthedDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => AuthedRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/one': typeof OneRoute
-  '/two': typeof TwoRoute
+  '/login': typeof LoginRoute
+  '/dashboard': typeof AuthedDashboardRoute
+  '/two': typeof AuthedTwoRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/one': typeof OneRoute
-  '/two': typeof TwoRoute
+  '/login': typeof LoginRoute
+  '/dashboard': typeof AuthedDashboardRoute
+  '/two': typeof AuthedTwoRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/one': typeof OneRoute
-  '/two': typeof TwoRoute
+  '/_authed': typeof AuthedRouteWithChildren
+  '/login': typeof LoginRoute
+  '/_authed/dashboard': typeof AuthedDashboardRoute
+  '/_authed/two': typeof AuthedTwoRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/one' | '/two'
+  fullPaths: '/' | '/login' | '/dashboard' | '/two'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/one' | '/two'
-  id: '__root__' | '/' | '/one' | '/two'
+  to: '/' | '/login' | '/dashboard' | '/two'
+  id:
+    | '__root__'
+    | '/'
+    | '/_authed'
+    | '/login'
+    | '/_authed/dashboard'
+    | '/_authed/two'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  OneRoute: typeof OneRoute
-  TwoRoute: typeof TwoRoute
+  AuthedRoute: typeof AuthedRouteWithChildren
+  LoginRoute: typeof LoginRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/two': {
-      id: '/two'
-      path: '/two'
-      fullPath: '/two'
-      preLoaderRoute: typeof TwoRouteImport
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/one': {
-      id: '/one'
-      path: '/one'
-      fullPath: '/one'
-      preLoaderRoute: typeof OneRouteImport
+    '/_authed': {
+      id: '/_authed'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof AuthedRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -82,13 +103,40 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authed/two': {
+      id: '/_authed/two'
+      path: '/two'
+      fullPath: '/two'
+      preLoaderRoute: typeof AuthedTwoRouteImport
+      parentRoute: typeof AuthedRoute
+    }
+    '/_authed/dashboard': {
+      id: '/_authed/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof AuthedDashboardRouteImport
+      parentRoute: typeof AuthedRoute
+    }
   }
 }
 
+interface AuthedRouteChildren {
+  AuthedDashboardRoute: typeof AuthedDashboardRoute
+  AuthedTwoRoute: typeof AuthedTwoRoute
+}
+
+const AuthedRouteChildren: AuthedRouteChildren = {
+  AuthedDashboardRoute: AuthedDashboardRoute,
+  AuthedTwoRoute: AuthedTwoRoute,
+}
+
+const AuthedRouteWithChildren =
+  AuthedRoute._addFileChildren(AuthedRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  OneRoute: OneRoute,
-  TwoRoute: TwoRoute,
+  AuthedRoute: AuthedRouteWithChildren,
+  LoginRoute: LoginRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
