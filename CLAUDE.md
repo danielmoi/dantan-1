@@ -15,6 +15,10 @@ npm run build  # production build (Netlify target)
 
 No test or lint scripts are configured. TypeScript is checked implicitly via Vite's build.
 
+## Allowed commands
+
+- `npm run build`
+
 ## Architecture
 
 ### Routing
