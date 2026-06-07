@@ -43,3 +43,7 @@ Tailwind v4 via PostCSS. Global styles and CSS variable definitions are in `src/
 ### Deployment
 
 Vite is configured with `target: 'netlify'` in the TanStack Start plugin. Build output is Netlify-ready.
+
+### Commits
+- Write single sentence messages
+- Do not refer to yourself, no AI self-references
