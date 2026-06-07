@@ -45,7 +45,7 @@ export function NavUser({
 
   const handleSignOut = () => {
     signOut()
-    navigate({ to: '/login' })
+    navigate({ to: '/' })
   }
 
   const initials = user.name
