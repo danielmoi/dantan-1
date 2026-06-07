@@ -9,4 +9,7 @@ node_modules
 
 /build/
 
-.tanstack/tmp
+.tanstack
+.netlify
+.nitro
+dist
