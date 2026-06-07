@@ -26,39 +26,31 @@ export function ThemeProvider({
   storageKey = 'vite-ui-theme',
   ...props
 }: ThemeProviderProps) {
-  if (typeof localStorage === 'undefined') {
-    return null;
-  }
-
   const [mounted, setMounted] = useState(false);
+  const [theme, setTheme] = useState<Theme>(defaultTheme);
 
-  const [theme, setTheme] = useState<Theme>(
-    () => (localStorage.getItem(storageKey) as Theme | null) ?? defaultTheme
-  );
+  useEffect(() => {
+    const stored = localStorage.getItem(storageKey) as Theme | null;
+    if (stored) setTheme(stored);
+    setMounted(true);
+  }, [storageKey]);
 
   useEffect(() => {
     const root = window.document.documentElement;
-
     root.classList.remove('light', 'dark');
-
     if (theme === 'system') {
       const systemTheme = window.matchMedia('(prefers-color-scheme: dark)')
         .matches
         ? 'dark'
         : 'light';
-
       root.classList.add(systemTheme);
       return;
     }
-
     root.classList.add(theme);
   }, [theme]);
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
   if (!mounted) {
-    return <>{children}</>; // Render children without ThemeProvider during SSR
+    return <>{children}</>;
   }
 
   const value = {
