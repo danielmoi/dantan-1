@@ -32,8 +32,8 @@ export const data = {
       isActive: true,
       items: [
         {
-          title: 'One',
-          url: '/one',
+          title: 'Dashboard',
+          url: '/dashboard',
         },
         {
           title: 'Two',
