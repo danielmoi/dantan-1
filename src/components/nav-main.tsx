@@ -1,3 +1,4 @@
+import { Link } from '@tanstack/react-router';
 import { ChevronRight } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 
@@ -55,9 +56,9 @@ export function NavMain({
                   {item.items?.map((subItem) => (
                     <SidebarMenuSubItem key={subItem.title}>
                       <SidebarMenuSubButton asChild>
-                        <a href={subItem.url}>
+                        <Link to={subItem.url}>
                           <span>{subItem.title}</span>
-                        </a>
+                        </Link>
                       </SidebarMenuSubButton>
                     </SidebarMenuSubItem>
                   ))}
