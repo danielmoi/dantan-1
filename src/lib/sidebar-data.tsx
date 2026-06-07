@@ -1,29 +1,6 @@
-import {
-  AudioWaveform,
-  Command,
-  GalleryVerticalEnd,
-  Settings2,
-  SquareTerminal,
-} from 'lucide-react';
+import { Settings2, SquareTerminal } from 'lucide-react';
 
 export const data = {
-  teams: [
-    {
-      name: 'Danstack',
-      logo: GalleryVerticalEnd,
-      plan: 'Enterprise',
-    },
-    {
-      name: 'Acme Corp.',
-      logo: AudioWaveform,
-      plan: 'Startup',
-    },
-    {
-      name: 'Evil Corp.',
-      logo: Command,
-      plan: 'Free',
-    },
-  ],
   navMain: [
     {
       title: 'Main',
