@@ -68,10 +68,13 @@ function RootComponent() {
   );
 }
 
+const THEME_SCRIPT = `(function(){try{var t=localStorage.getItem('vite-ui-theme')||'dark';if(t==='system'){t=window.matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light';}document.documentElement.classList.add(t);}catch(e){}})();`;
+
 function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
   return (
     <html>
       <head>
+        <script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />
         <HeadContent />
       </head>
       <body>
