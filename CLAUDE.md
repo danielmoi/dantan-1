@@ -49,5 +49,5 @@ Tailwind v4 via PostCSS. Global styles and CSS variable definitions are in `src/
 Vite is configured with `target: 'netlify'` in the TanStack Start plugin. Build output is Netlify-ready.
 
 ### Commits
-- Write single sentence messages
-- Do not refer to yourself, no AI self-references
+- Write all git commit messages using standard professional conventions (imperative mood, concise summary).
+- Do not append any 'Co-authored-by:' trailers, AI attributions, or tool metadata to the end of the message.
