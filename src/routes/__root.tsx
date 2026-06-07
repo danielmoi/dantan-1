@@ -7,6 +7,7 @@ import {
   createRootRoute,
 } from '@tanstack/react-router';
 import { NotFound } from 'src/components/NotFound';
+import { ErrorBoundary } from '@/components/ErrorBoundary';
 import type { ReactNode } from 'react';
 import appCss from '@/styles/app.css?url';
 
@@ -53,6 +54,7 @@ export const Route = createRootRoute({
       { rel: 'icon', href: '/favicon.ico' },
     ],
   }),
+  errorComponent: ErrorBoundary,
   notFoundComponent: () => <NotFound />,
   component: RootComponent,
 });
