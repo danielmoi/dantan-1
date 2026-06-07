@@ -1,8 +1,12 @@
-import { tanstackConfig } from '@tanstack/eslint-config';
+import { tanstackConfig } from '@tanstack/eslint-config'
 
 export default [
   ...tanstackConfig,
   {
-    // Custom rules go here
+    name: 'dantan/ignores',
+    ignores: [
+      'src/routeTree.gen.ts',
+      'src/components/ui/**',
+    ],
   },
-];
+]
