@@ -1,22 +1,12 @@
 import {
   AudioWaveform,
-  BookOpen,
-  Bot,
   Command,
-  Frame,
   GalleryVerticalEnd,
-  Map,
-  PieChart,
   Settings2,
   SquareTerminal,
 } from 'lucide-react';
 
 export const data = {
-  user: {
-    name: 'Demo User',
-    email: 'user@example.com',
-    avatar: '/avatar.png',
-  },
   teams: [
     {
       name: 'Danstack',
