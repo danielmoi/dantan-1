@@ -13,3 +13,8 @@ node_modules
 .netlify
 .nitro
 dist
+
+
+.env
+.env.*
+!.env.example
