@@ -1,64 +1,44 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 import type { ReactNode } from 'react';
-
-export type User = {
-  id: string;
-  name: string;
-  email: string;
-  avatar: string;
-};
-
-type AuthContextType = {
-  user: User | null;
-  signIn: (user: User) => void;
-  signOut: () => void;
-};
-
-const AUTH_KEY = 'auth-user';
-
-// Read auth state outside React for use in beforeLoad (client-side only).
-// For SSR-aware auth, replace localStorage with a cookie readable server-side.
-export function getUser(): User | null {
-  if (typeof window === 'undefined') return null;
-  try {
-    const raw = localStorage.getItem(AUTH_KEY);
-    return raw ? (JSON.parse(raw) as User) : null;
-  } catch {
-    return null;
-  }
-}
+import type { Session, AuthContextType } from '@/types/auth';
+import { supabase } from '@/lib/supabase';
 
 const AuthContext = createContext<AuthContextType>({
+  session: null,
   user: null,
-  signIn: () => {},
-  signOut: () => {},
+  signOut: async () => {},
 });
 
+export async function getSession(): Promise<Session | null> {
+  if (typeof window === 'undefined') return null;
+  const { data: { session } } = await supabase.auth.getSession();
+  return session;
+}
+
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<User | null>(() => getUser());
+  const [session, setSession] = useState<Session | null>(null);
 
-  const signIn = (user: User) => {
-    localStorage.setItem(AUTH_KEY, JSON.stringify(user));
-    setUser(user);
-  };
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
+    });
 
-  const signOut = () => {
-    localStorage.removeItem(AUTH_KEY);
-    setUser(null);
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
+  const signOut = async () => {
+    await supabase.auth.signOut();
   };
 
   return (
-    <AuthContext.Provider value={{ user, signIn, signOut }}>
+    <AuthContext.Provider value={{ session, user: session?.user ?? null, signOut }}>
       {children}
     </AuthContext.Provider>
   );
 }
 
 export const useAuth = () => useContext(AuthContext);
-
-export const DEMO_USER: User = {
-  id: '1',
-  name: 'Demo User',
-  email: 'user@example.com',
-  avatar: '/avatar.png',
-};

@@ -13,12 +13,9 @@ import {
   SidebarMenuItem,
   SidebarRail,
 } from '@/components/ui/sidebar';
-import { useAuth } from '@/lib/auth';
 import { data } from '@/lib/sidebar-data';
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const { user } = useAuth();
-
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
@@ -39,7 +36,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavMain items={data.navMain} />
       </SidebarContent>
       <SidebarFooter>
-        {user && <NavUser user={user} />}
+        <NavUser />
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>
