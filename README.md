@@ -12,15 +12,23 @@
 
 ## Steps to use template
 
+## Deploy
+- [ ] This project is set up for Vercel deployment
+
+## Google OAuth Setup
+- [ ] Set up new Google Cloud project https://console.cloud.google.com/
+- [ ] API & Services > OAuth consent screen
+  - [ ] Select External users
+  - [ ] Add URLs
+  - Redirect URI = https://project-name.supabase.co/auth/v1/callback
+
 ### Supabase setup
 - [ ] Create a Supabase project
 - [ ] Copy .env.example → .env.local and fill in VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY
 - [ ] Enable Email and Magic Link providers in Supabase Authentication >
-- [ ] Enable Google OAuth in Supabase — requires a Google Cloud Console OAuth app
-  - [ ] Set up new Google Cloud project https://console.cloud.google.com/
-  - [ ] API & Services > OAuth consent screen
-    - [ ] Select External users
 - [ ] Add http://localhost:3000/auth/callback to Supabase allowed redirect URLs
+  - Authentication > Sign in / Providers > Auth Providers > Google
+  - Paste in Google Client ID and OAuth Secret
 
 ### Branding
 - [ ] Rename the app — it's called "Danstack" in package.json (name field), __root.tsx (<title>), the login page heading, and the sidebar header in app-sidebar.tsx
