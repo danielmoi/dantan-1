@@ -7,5 +7,5 @@ export default defineConfig({
   server: {
     port: 3000,
   },
-  plugins: [tsConfigPaths(), tanstackStart({ target: 'netlify' })],
+  plugins: [tsConfigPaths(), tanstackStart({ target: 'vercel' })],
 });
