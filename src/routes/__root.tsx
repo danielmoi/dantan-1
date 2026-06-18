@@ -71,7 +71,7 @@ const THEME_SCRIPT = `(function(){try{var t=localStorage.getItem('vite-ui-theme'
 
 function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
   return (
-    <html>
+    <html suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />
         <HeadContent />

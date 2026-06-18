@@ -1,4 +1,4 @@
-import { createFileRoute, useNavigate } from '@tanstack/react-router';
+import { createFileRoute } from '@tanstack/react-router';
 import { useEffect } from 'react';
 import { supabase } from '@/lib/supabase';
 
@@ -7,18 +7,19 @@ export const Route = createFileRoute('/auth/callback')({
 });
 
 function AuthCallback() {
-  const navigate = useNavigate();
-
   useEffect(() => {
     const code = new URLSearchParams(window.location.search).get('code');
-    if (!code) {
-      navigate({ to: '/login' });
-      return;
+
+    if (code) {
+      supabase.auth.exchangeCodeForSession(code).then(({ error }) => {
+        window.location.replace(error ? '/login?error=auth_failed' : '/dashboard');
+      });
+    } else {
+      supabase.auth.getSession().then(({ data: { session } }) => {
+        window.location.replace(session ? '/dashboard' : '/login?error=auth_failed');
+      });
     }
-    supabase.auth.exchangeCodeForSession(code).then(({ error }) => {
-      navigate({ to: error ? '/login' : '/dashboard' });
-    });
-  }, [navigate]);
+  }, []);
 
   return (
     <div className="flex min-h-svh items-center justify-center">

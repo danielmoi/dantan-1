@@ -16,7 +16,11 @@ function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState(() =>
+    new URLSearchParams(window.location.search).get('error')
+      ? 'Sign in failed. Please try again.'
+      : ''
+  );
 
   const handleEmailPassword = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -50,6 +54,8 @@ function LoginPage() {
           <h1 className="text-2xl font-bold mb-4">Sign in to Danstack</h1>
         </div>
 
+        {error && <p className="text-sm text-destructive">{error}</p>}
+
         <Button
           variant="outline"
           onClick={handleGoogle}
@@ -65,8 +71,6 @@ function LoginPage() {
           <span className="text-xs uppercase text-muted-foreground">or</span>
           <div className="h-px flex-1 bg-border" />
         </div>
-
-        {error && <p className="text-sm text-destructive">{error}</p>}
 
         <form onSubmit={handleEmailPassword} className="flex flex-col gap-4">
           <div className="flex flex-col gap-2">

@@ -7,6 +7,7 @@ import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
 
 export const Route = createFileRoute('/_authed')({
   beforeLoad: async () => {
+    if (typeof window === 'undefined') return;
     const session = await getSession();
     if (!session) {
       throw redirect({ to: '/login' });
