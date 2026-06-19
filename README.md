@@ -12,10 +12,11 @@
 
 ## Steps to use template
 
-## Deploy
+## Deploy setup
 - [ ] This project is set up for Vercel deployment
+- [ ] Add env variables
 
-## Google OAuth Setup
+## Google OAuth setup
 - [ ] Set up new Google Cloud project https://console.cloud.google.com/
 - [ ] API & Services > OAuth consent screen
   - [ ] Select External users
@@ -26,9 +27,15 @@
 - [ ] Create a Supabase project
 - [ ] Copy .env.example → .env.local and fill in VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY
 - [ ] Enable Email and Magic Link providers in Supabase Authentication >
-- [ ] Add http://localhost:3000/auth/callback to Supabase allowed redirect URLs
+- [ ] Add in Google OAuth
   - Authentication > Sign in / Providers > Auth Providers > Google
   - Paste in Google Client ID and OAuth Secret
+- [ ] Add Supabase allowed redirect URLs = Authentication > URL Configuration
+  - http://localhost:3000/auth/callback
+  - http://localhost:3000/auth/reset-password
+  - https://dantan-1.vercel.app/auth/callback
+  - https://dantan-1.vercel.app/auth/reset-password
+
 
 ### Branding
 - [ ] Rename the app — it's called "Danstack" in package.json (name field), __root.tsx (<title>), the login page heading, and the sidebar header in app-sidebar.tsx
@@ -41,6 +48,3 @@
 - [ ] Wire up the non-functional sidebar menu items (Account, Billing, Notifications in nav-user.tsx)
 
 ### Deployment
-- [ ] Set VITE_APP_URL to your production domain — this is used in magic link and OAuth redirect URLs, so if it's wrong auth will break
-- [ ] Add all three env vars to Netlify environment settings
-- [ ] Add your production callback URL (https://yourdomain.com/auth/callback) to Supabase allowed redirect URLs
