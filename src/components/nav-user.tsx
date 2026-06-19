@@ -3,8 +3,12 @@ import {
   Bell,
   CreditCard,
   LogOut,
+  Settings,
   Sparkles,
 } from 'lucide-react';
+import { useNavigate } from '@tanstack/react-router';
+import type { User } from '@/types/auth';
+import type { Profile } from '@/types/profile';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -20,23 +24,29 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from '@/components/ui/sidebar';
-import { Settings } from 'lucide-react';
-import { useNavigate } from '@tanstack/react-router';
 import { useAuth } from '@/lib/auth';
+import { useProfile } from '@/lib/profile';
+
+function getDisplayInfo(user: User, profile: Profile | null) {
+  const name =
+    profile?.name ??
+    user.user_metadata.full_name ??
+    user.user_metadata.name ??
+    user.email?.split('@')[0] ??
+    'Account';
+  const email = profile?.email ?? user.email ?? '';
+  return { name, email };
+}
 
 export function NavUser() {
   const { isMobile } = useSidebar();
   const { user, signOut } = useAuth();
+  const { profile } = useProfile();
   const navigate = useNavigate();
 
   if (!user) return null;
 
-  const name =
-    user.user_metadata?.full_name ??
-    user.user_metadata?.name ??
-    user.email?.split('@')[0] ??
-    'Account';
-  const email = user.email ?? '';
+  const { name, email } = getDisplayInfo(user, profile);
 
   const handleSignOut = async () => {
     await signOut();
