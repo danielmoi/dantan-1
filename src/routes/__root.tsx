@@ -7,12 +7,13 @@ import {
   createRootRoute,
 } from '@tanstack/react-router';
 import { NotFound } from 'src/components/NotFound';
-import { ErrorBoundary } from '@/components/ErrorBoundary';
 import type { ReactNode } from 'react';
+import { ErrorBoundary } from '@/components/ErrorBoundary';
 import appCss from '@/styles/app.css?url';
 
 import { ThemeProvider } from '@/components/theme-provider';
 import { AuthProvider } from '@/lib/auth';
+import { ProfileProvider } from '@/lib/profile';
 
 export const Route = createRootRoute({
   head: () => ({
@@ -79,7 +80,7 @@ function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
       <body>
         <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
           <AuthProvider>
-            {children}
+            <ProfileProvider>{children}</ProfileProvider>
           </AuthProvider>
         </ThemeProvider>
         <Scripts />
