@@ -23,11 +23,12 @@ function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
-  const [error, setError] = useState(() =>
-    new URLSearchParams(window.location.search).get('error')
+  const [error, setError] = useState(() => {
+    if (typeof window === 'undefined') return '';
+    return new URLSearchParams(window.location.search).get('error')
       ? 'Sign in failed. Please try again.'
-      : ''
-  );
+      : '';
+  });
 
   const switchMode = (next: AuthMode) => {
     setMode(next);
@@ -111,7 +112,7 @@ function LoginPage() {
         {error && <p className="text-sm text-destructive">{error}</p>}
 
         {message ? (
-          <p className="text-sm text-center text-green-600 dark:text-green-400">{message}</p>
+          <p className="text-sm text-center text-success">{message}</p>
         ) : (
           <>
             {mode !== 'forgot-password' && (

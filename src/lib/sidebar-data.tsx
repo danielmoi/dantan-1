@@ -12,10 +12,6 @@ export const data = {
           title: 'Dashboard',
           url: '/dashboard',
         },
-        {
-          title: 'Two',
-          url: '/two',
-        },
       ],
     },
   ],

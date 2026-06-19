@@ -50,7 +50,7 @@ function ResetPasswordPage() {
 
         {message ? (
           <div className="flex flex-col gap-4">
-            <p className="text-sm text-center text-green-600 dark:text-green-400">{message}</p>
+            <p className="text-sm text-center text-success">{message}</p>
             <Button onClick={() => window.location.replace('/login')}>Go to sign in</Button>
           </div>
         ) : !ready ? (
