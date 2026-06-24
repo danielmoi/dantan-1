@@ -1,5 +1,5 @@
 export const env = {
-  appUrl: import.meta.env.VITE_APP_URL ?? 'http://localhost:3000',
+  appUrl: import.meta.env.VITE_APP_URL ?? 'http://localhost:1337',
   supabaseUrl: import.meta.env.VITE_SUPABASE_URL as string | undefined,
   supabaseAnonKey: import.meta.env.VITE_SUPABASE_ANON_KEY as string | undefined,
 } as const;

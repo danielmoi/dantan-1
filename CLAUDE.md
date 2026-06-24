@@ -9,7 +9,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Commands
 
 ```bash
-npm run dev    # start dev server on port 3000
+npm run dev    # start dev server on port 1337
 npm run build  # production build (Netlify target)
 ```
 

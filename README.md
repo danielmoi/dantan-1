@@ -31,8 +31,8 @@
   - Authentication > Sign in / Providers > Auth Providers > Google
   - Paste in Google Client ID and OAuth Secret
 - [ ] Add Supabase allowed redirect URLs = Authentication > URL Configuration
-  - http://localhost:3000/auth/callback
-  - http://localhost:3000/auth/reset-password
+  - http://localhost:1337/auth/callback
+  - http://localhost:1337/auth/reset-password
   - https://dantan-1.vercel.app/auth/callback
   - https://dantan-1.vercel.app/auth/reset-password
 
