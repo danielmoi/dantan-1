@@ -1,5 +1,17 @@
-import type { Profile } from '@/types/profile';
+import type { Profile, ProfileRow } from '@/types/profile';
 import { supabase } from '@/lib/supabase';
+
+function toProfile(row: ProfileRow): Profile {
+  return {
+    id: row.id,
+    email: row.email,
+    name: row.name,
+    avatarUrl: row.avatar_url,
+    isSuperAdmin: row.is_super_admin,
+    createdAt: row.created_at,
+    updatedAt: row.updated_at,
+  };
+}
 
 export const ProfileRepository = {
   async get(id: string): Promise<Profile | null> {
@@ -9,17 +21,17 @@ export const ProfileRepository = {
       .eq('id', id)
       .single();
 
-    return data as Profile | null;
+    return data ? toProfile(data as ProfileRow) : null;
   },
 
-  async upsert(profile: Partial<Profile> & { id: string }): Promise<Profile | null> {
+  async upsert(row: Partial<ProfileRow> & { id: string }): Promise<Profile | null> {
     const { data, error } = await supabase
       .from('profiles')
-      .upsert({ ...profile, updated_at: new Date().toISOString() })
+      .upsert({ ...row, updated_at: new Date().toISOString() })
       .select()
       .single();
 
     if (error) return null;
-    return data as Profile;
+    return toProfile(data as ProfileRow);
   },
 };

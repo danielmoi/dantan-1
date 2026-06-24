@@ -35,6 +35,7 @@ function getDisplayInfo(user: User, profile: Profile | null) {
     user.email?.split('@')[0] ??
     'Account';
   const email = profile?.email ?? user.email ?? '';
+  const avatarUrl = profile?.avatarUrl ?? null;
   return { name, email };
 }
 
