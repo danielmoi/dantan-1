@@ -1,6 +1,15 @@
+import { createClient } from '@supabase/supabase-js';
 import { createServerClient } from '@supabase/ssr';
 import { deleteCookie, parseCookies, setCookie } from '@tanstack/react-start/server';
 import { env } from '@/lib/env';
+
+export function createSupabaseAdminClient() {
+  return createClient(
+    env.supabaseUrl ?? '',
+    process.env.SUPABASE_SERVICE_ROLE_KEY ?? '',
+    { auth: { autoRefreshToken: false, persistSession: false } },
+  );
+}
 
 export function createSupabaseServerClient() {
   return createServerClient(

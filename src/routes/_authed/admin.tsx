@@ -134,8 +134,14 @@ function AdminPage() {
                   <span className="font-medium">{inv.email}</span>
                   <span className="text-xs text-muted-foreground">
                     {inv.status}
+                    {inv.status === 'created' && (
+                      <> · {formatDate(inv.createdAt)}</>
+                    )}
                     {(inv.status === 'resent' || inv.status === 'cancelled') && (
                       <> · {formatDate(inv.updatedAt)}</>
+                    )}
+                    {inv.status === 'accepted' && inv.acceptedAt && (
+                      <> · {formatDate(inv.acceptedAt)}</>
                     )}
                   </span>
                 </div>

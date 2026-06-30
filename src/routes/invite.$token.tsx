@@ -10,6 +10,7 @@ import { supabase } from '@/lib/supabase';
 import { env } from '@/lib/env';
 import { useAuth } from '@/lib/auth';
 import { InvitationRepository } from '@/repositories/invitation';
+import { getInviteByToken } from '@/server/invitation';
 
 export const Route = createFileRoute('/invite/$token')({
   component: InvitePage,
@@ -28,7 +29,7 @@ function InvitePage() {
   const [authMode, setAuthMode] = useState<'signup' | 'signin'>('signup');
 
   useEffect(() => {
-    InvitationRepository.getByToken(token).then((inv) => {
+    getInviteByToken({ data: { token } }).then((inv) => {
       if (!inv) {
         setError('Invalid invitation link.');
       } else if (inv.status === 'accepted') {

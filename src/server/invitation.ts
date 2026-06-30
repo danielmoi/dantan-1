@@ -3,9 +3,24 @@ import { z } from 'zod';
 import type { InvitationRow } from '@/types/invitation';
 import { env } from '@/lib/env';
 import { sendEmail } from '@/lib/email';
-import { createSupabaseServerClient } from '@/lib/supabase.server';
+import { createSupabaseAdminClient, createSupabaseServerClient } from '@/lib/supabase.server';
 import { toInvitation } from '@/repositories/invitation';
 import { InvitationEmail } from '@/emails/InvitationEmail';
+
+export const getInviteByToken = createServerFn({ method: 'GET' })
+  .validator((data: unknown) =>
+    z.object({ token: z.uuid() }).parse(data)
+  )
+  .handler(async ({ data }) => {
+    const client = createSupabaseAdminClient();
+    const { data: row } = await client
+      .from('invitations')
+      .select('*')
+      .eq('token', data.token)
+      .single();
+
+    return row ? toInvitation(row as InvitationRow) : null;
+  });
 
 export const resendInvite = createServerFn({ method: 'POST' })
   .validator((data: unknown) =>
