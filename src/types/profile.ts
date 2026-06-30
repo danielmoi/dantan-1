@@ -1,4 +1,4 @@
-export type Profile = {
+export type ProfileRow = {
   id: string;
   email: string | null;
   name: string | null;
@@ -6,4 +6,14 @@ export type Profile = {
   is_super_admin: boolean;
   created_at: string;
   updated_at: string;
+};
+
+export type Profile = {
+  id: string;
+  email: string | null;
+  name: string | null;
+  avatarUrl: string | null;
+  isSuperAdmin: boolean;
+  createdAt: string;
+  updatedAt: string;
 };

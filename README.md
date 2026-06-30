@@ -12,6 +12,11 @@
 
 ## Steps to use template
 
+### Branding
+- [ ] Rename the app — it's called "Danstack" in package.json (name field), __root.tsx (<title>), the login page heading, and the sidebar header in app-sidebar.tsx
+- [ ] Replace /hero.png (home page background)
+- [ ] Replace favicons and site.webmanifest
+
 ## Deploy setup
 - [ ] This project is set up for Vercel deployment
 - [ ] Add env variables
@@ -37,10 +42,12 @@
   - https://dantan-1.vercel.app/auth/reset-password
 
 
-### Branding
-- [ ] Rename the app — it's called "Danstack" in package.json (name field), __root.tsx (<title>), the login page heading, and the sidebar header in app-sidebar.tsx
-- [ ] Replace /hero.png (home page background)
-- [ ] Replace favicons and site.webmanifest
+### Email
+- [ ] Obtain Resend API Key
+- [ ] Set email address for from email
+
+### Stripe
+
 
 ### Content
 - [ ] Replace placeholder nav items in src/lib/sidebar-data.tsx (currently Dashboard + Two)
