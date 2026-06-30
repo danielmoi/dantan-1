@@ -59,7 +59,6 @@ function AdminPage() {
     setRowLoading((prev) => ({ ...prev, [id]: 'resending' }));
     try {
       const updated = await resendInvite({ data: { id } });
-      if (updated)
         setInvitations((prev) =>
           prev.map((inv) => (inv.id === id ? updated : inv))
         );

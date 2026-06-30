@@ -1,11 +1,11 @@
 import { createServerFn } from '@tanstack/react-start';
 import { z } from 'zod';
+import type { InvitationRow } from '@/types/invitation';
 import { env } from '@/lib/env';
 import { sendEmail } from '@/lib/email';
 import { createSupabaseServerClient } from '@/lib/supabase.server';
 import { toInvitation } from '@/repositories/invitation';
 import { InvitationEmail } from '@/emails/InvitationEmail';
-import type { InvitationRow } from '@/types/invitation';
 
 export const resendInvite = createServerFn({ method: 'POST' })
   .validator((data: unknown) =>
