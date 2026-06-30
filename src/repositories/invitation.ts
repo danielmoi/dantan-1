@@ -1,7 +1,7 @@
 import type { Invitation, InvitationRow, InvitationStatus } from '@/types/invitation';
 import { supabase } from '@/lib/supabase';
 
-function toInvitation(row: InvitationRow): Invitation {
+export function toInvitation(row: InvitationRow): Invitation {
   return {
     id: row.id,
     email: row.email,

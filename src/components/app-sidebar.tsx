@@ -14,8 +14,21 @@ import {
   SidebarRail,
 } from '@/components/ui/sidebar';
 import { data } from '@/lib/sidebar-data';
+import { useProfile } from '@/lib/profile';
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const { profile } = useProfile();
+
+  const navItems = [
+    ...data.navMain,
+    ...(profile?.isSuperAdmin ? [{
+      title: 'Admin',
+      url: '#',
+      icon: null,
+      items: [{ title: 'Admin', url: '/admin' }],
+    }] : []),
+  ];
+
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
@@ -33,7 +46,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={data.navMain} />
+        <NavMain items={navItems} />
       </SidebarContent>
       <SidebarFooter>
         <NavUser />
