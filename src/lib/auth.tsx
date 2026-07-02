@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import type { ReactNode } from 'react';
-import type { Session, AuthContextType } from '@/types/auth';
+import type { AuthContextType, Session } from '@/types/auth';
 import { supabase } from '@/lib/supabase';
 
 const AuthContext = createContext<AuthContextType>({

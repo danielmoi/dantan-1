@@ -30,7 +30,7 @@
 
 ### Supabase setup
 - [ ] Create a Supabase project
-- [ ] Copy .env.example → .env.local and fill in VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY
+- [ ] Copy .env.example → .env.local and fill in VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY and SUPABASE_SERVICE_ROLE_KEY
 - [ ] Enable Email and Magic Link providers in Supabase Authentication >
 - [ ] Add in Google OAuth
   - Authentication > Sign in / Providers > Auth Providers > Google
@@ -44,7 +44,9 @@
 
 ### Email
 - [ ] Obtain Resend API Key
-- [ ] Set email address for from email
+- [ ] Set email address for FROM email
+
+
 
 ### Stripe
 

@@ -8,6 +8,9 @@ function toProfile(row: ProfileRow): Profile {
     name: row.name,
     avatarUrl: row.avatar_url,
     isSuperAdmin: row.is_super_admin,
+    stripeCustomerId: row.stripe_customer_id,
+    stripeSubscriptionId: row.stripe_subscription_id,
+    subscriptionTier: row.subscription_tier,
     createdAt: row.created_at,
     updatedAt: row.updated_at,
   };
