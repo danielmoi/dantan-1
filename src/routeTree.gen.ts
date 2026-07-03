@@ -8,6 +8,8 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
+import { createServerRootRoute } from '@tanstack/react-start/server'
+
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as AuthedRouteImport } from './routes/_authed'
@@ -17,7 +19,11 @@ import { Route as AuthResetPasswordRouteImport } from './routes/auth/reset-passw
 import { Route as AuthCallbackRouteImport } from './routes/auth/callback'
 import { Route as AuthedTwoRouteImport } from './routes/_authed/two'
 import { Route as AuthedDashboardRouteImport } from './routes/_authed/dashboard'
+import { Route as AuthedBillingRouteImport } from './routes/_authed/billing'
 import { Route as AuthedAdminRouteImport } from './routes/_authed/admin'
+import { ServerRoute as ApiStripeWebhookServerRouteImport } from './routes/api/stripe/webhook'
+
+const rootServerRouteImport = createServerRootRoute()
 
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
@@ -58,16 +64,27 @@ const AuthedDashboardRoute = AuthedDashboardRouteImport.update({
   path: '/dashboard',
   getParentRoute: () => AuthedRoute,
 } as any)
+const AuthedBillingRoute = AuthedBillingRouteImport.update({
+  id: '/billing',
+  path: '/billing',
+  getParentRoute: () => AuthedRoute,
+} as any)
 const AuthedAdminRoute = AuthedAdminRouteImport.update({
   id: '/admin',
   path: '/admin',
   getParentRoute: () => AuthedRoute,
+} as any)
+const ApiStripeWebhookServerRoute = ApiStripeWebhookServerRouteImport.update({
+  id: '/api/stripe/webhook',
+  path: '/api/stripe/webhook',
+  getParentRoute: () => rootServerRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/admin': typeof AuthedAdminRoute
+  '/billing': typeof AuthedBillingRoute
   '/dashboard': typeof AuthedDashboardRoute
   '/two': typeof AuthedTwoRoute
   '/auth/callback': typeof AuthCallbackRoute
@@ -78,6 +95,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/admin': typeof AuthedAdminRoute
+  '/billing': typeof AuthedBillingRoute
   '/dashboard': typeof AuthedDashboardRoute
   '/two': typeof AuthedTwoRoute
   '/auth/callback': typeof AuthCallbackRoute
@@ -90,6 +108,7 @@ export interface FileRoutesById {
   '/_authed': typeof AuthedRouteWithChildren
   '/login': typeof LoginRoute
   '/_authed/admin': typeof AuthedAdminRoute
+  '/_authed/billing': typeof AuthedBillingRoute
   '/_authed/dashboard': typeof AuthedDashboardRoute
   '/_authed/two': typeof AuthedTwoRoute
   '/auth/callback': typeof AuthCallbackRoute
@@ -102,6 +121,7 @@ export interface FileRouteTypes {
     | '/'
     | '/login'
     | '/admin'
+    | '/billing'
     | '/dashboard'
     | '/two'
     | '/auth/callback'
@@ -112,6 +132,7 @@ export interface FileRouteTypes {
     | '/'
     | '/login'
     | '/admin'
+    | '/billing'
     | '/dashboard'
     | '/two'
     | '/auth/callback'
@@ -123,6 +144,7 @@ export interface FileRouteTypes {
     | '/_authed'
     | '/login'
     | '/_authed/admin'
+    | '/_authed/billing'
     | '/_authed/dashboard'
     | '/_authed/two'
     | '/auth/callback'
@@ -137,6 +159,27 @@ export interface RootRouteChildren {
   AuthCallbackRoute: typeof AuthCallbackRoute
   AuthResetPasswordRoute: typeof AuthResetPasswordRoute
   InviteTokenRoute: typeof InviteTokenRoute
+}
+export interface FileServerRoutesByFullPath {
+  '/api/stripe/webhook': typeof ApiStripeWebhookServerRoute
+}
+export interface FileServerRoutesByTo {
+  '/api/stripe/webhook': typeof ApiStripeWebhookServerRoute
+}
+export interface FileServerRoutesById {
+  __root__: typeof rootServerRouteImport
+  '/api/stripe/webhook': typeof ApiStripeWebhookServerRoute
+}
+export interface FileServerRouteTypes {
+  fileServerRoutesByFullPath: FileServerRoutesByFullPath
+  fullPaths: '/api/stripe/webhook'
+  fileServerRoutesByTo: FileServerRoutesByTo
+  to: '/api/stripe/webhook'
+  id: '__root__' | '/api/stripe/webhook'
+  fileServerRoutesById: FileServerRoutesById
+}
+export interface RootServerRouteChildren {
+  ApiStripeWebhookServerRoute: typeof ApiStripeWebhookServerRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -197,6 +240,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthedDashboardRouteImport
       parentRoute: typeof AuthedRoute
     }
+    '/_authed/billing': {
+      id: '/_authed/billing'
+      path: '/billing'
+      fullPath: '/billing'
+      preLoaderRoute: typeof AuthedBillingRouteImport
+      parentRoute: typeof AuthedRoute
+    }
     '/_authed/admin': {
       id: '/_authed/admin'
       path: '/admin'
@@ -206,15 +256,28 @@ declare module '@tanstack/react-router' {
     }
   }
 }
+declare module '@tanstack/react-start/server' {
+  interface ServerFileRoutesByPath {
+    '/api/stripe/webhook': {
+      id: '/api/stripe/webhook'
+      path: '/api/stripe/webhook'
+      fullPath: '/api/stripe/webhook'
+      preLoaderRoute: typeof ApiStripeWebhookServerRouteImport
+      parentRoute: typeof rootServerRouteImport
+    }
+  }
+}
 
 interface AuthedRouteChildren {
   AuthedAdminRoute: typeof AuthedAdminRoute
+  AuthedBillingRoute: typeof AuthedBillingRoute
   AuthedDashboardRoute: typeof AuthedDashboardRoute
   AuthedTwoRoute: typeof AuthedTwoRoute
 }
 
 const AuthedRouteChildren: AuthedRouteChildren = {
   AuthedAdminRoute: AuthedAdminRoute,
+  AuthedBillingRoute: AuthedBillingRoute,
   AuthedDashboardRoute: AuthedDashboardRoute,
   AuthedTwoRoute: AuthedTwoRoute,
 }
@@ -233,3 +296,9 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+const rootServerRouteChildren: RootServerRouteChildren = {
+  ApiStripeWebhookServerRoute: ApiStripeWebhookServerRoute,
+}
+export const serverRouteTree = rootServerRouteImport
+  ._addFileChildren(rootServerRouteChildren)
+  ._addFileTypes<FileServerRouteTypes>()

@@ -8,6 +8,7 @@ import {
 } from '@/components/ui/breadcrumb';
 import { Separator } from '@/components/ui/separator';
 import { SidebarTrigger } from '@/components/ui/sidebar';
+import { HeaderUserMenu } from '@/components/header-user-menu';
 
 export const Header = () => {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
@@ -30,8 +31,9 @@ export const Header = () => {
             </BreadcrumbList>
           </Breadcrumb>
         </div>
-        <div className="mr-4">
+        <div className="flex items-center gap-3 mr-4">
           <ModeToggle />
+          <HeaderUserMenu />
         </div>
       </div>
     </header>

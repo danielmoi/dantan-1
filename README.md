@@ -49,7 +49,11 @@
 
 
 ### Stripe
-
+- [ ] Add VITE_STRIPE_PUBLISHABLE_KEY, STRIPE_SECRET_KEY to .env.local (no VITE_ prefix on the secret key — it must stay server-only)
+- [ ] Run `npm run stripe:setup` to create the Product/Price for each paid tier in src/lib/constants.ts (TIER_DATA) and write src/lib/stripe-prices.generated.json — re-run any time TIER_DATA pricing changes
+- [ ] Add a webhook endpoint in the Stripe Dashboard pointing to `<your-domain>/api/stripe/webhook`, subscribed to customer.subscription.created/updated/deleted, and copy its signing secret into STRIPE_WEBHOOK_SECRET
+- [ ] Activate the Customer Portal (Dashboard > Settings > Billing > Customer Portal) — required once before createPortalSession will work
+- [ ] For local webhook testing, use the Stripe CLI: `stripe listen --forward-to localhost:1337/api/stripe/webhook`
 
 ### Content
 - [ ] Replace placeholder nav items in src/lib/sidebar-data.tsx (currently Dashboard + Two)

@@ -18,3 +18,5 @@ dist
 .env
 .env.*
 !.env.example
+
+src/lib/stripe-prices.generated.json

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Link } from '@tanstack/react-router';
 
 import { NavMain } from '@/components/nav-main';
-import { NavUser } from '@/components/nav-user';
+import { NavUpgrade } from '@/components/nav-upgrade';
 import {
   Sidebar,
   SidebarContent,
@@ -49,7 +49,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavMain items={navItems} />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser />
+        <NavUpgrade />
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>
