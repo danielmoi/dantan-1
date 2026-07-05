@@ -4,18 +4,25 @@ import { getTierForPriceId, stripe } from '@/lib/stripe.server';
 import { createSupabaseAdminClient } from '@/lib/supabase.server';
 
 async function syncSubscription(subscription: Stripe.Subscription) {
-  const priceId = subscription.items.data[0]?.price.id;
-  const isActive = subscription.status === 'active' || subscription.status === 'trialing';
-  const tier = isActive && priceId ? getTierForPriceId(priceId) : 0;
+  const customerId = subscription.customer as string;
+
+  // Re-derive the customer's current subscription from Stripe rather than trusting
+  // this event's payload in isolation — a stale/out-of-order event (e.g. an old
+  // subscription being canceled after a newer one replaced it) must not clobber
+  // a still-active subscription.
+  const subscriptions = await stripe.subscriptions.list({ customer: customerId, limit: 10 });
+  const current = subscriptions.data.find((s) => s.status === 'active' || s.status === 'trialing');
+  const priceId = current?.items.data[0]?.price.id;
+  const tier = current && priceId ? getTierForPriceId(priceId) : 0;
 
   await createSupabaseAdminClient()
     .from('profiles')
     .update({
       subscription_tier: tier,
-      stripe_subscription_id: isActive ? subscription.id : null,
+      stripe_subscription_id: current?.id ?? null,
       updated_at: new Date().toISOString(),
     })
-    .eq('stripe_customer_id', subscription.customer as string);
+    .eq('stripe_customer_id', customerId);
 }
 
 export const ServerRoute = createServerFileRoute('/api/stripe/webhook').methods({

@@ -14,9 +14,13 @@ export const createCheckoutSession = createServerFn({ method: 'POST' })
 
     const { data: profile } = await client
       .from('profiles')
-      .select('stripe_customer_id')
+      .select('stripe_customer_id, stripe_subscription_id')
       .eq('id', user.id)
       .single();
+
+    if (profile?.stripe_subscription_id) {
+      throw new Error('You already have an active subscription. Manage it from the billing portal instead.');
+    }
 
     let customerId = profile?.stripe_customer_id ?? null;
 
